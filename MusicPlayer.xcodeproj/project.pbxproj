@@ -26,6 +26,7 @@
 		CF221E612AB5883A006098DA /* PlayerHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E602AB5883A006098DA /* PlayerHelperView.swift */; };
 		CF221E652AB588EC006098DA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E642AB588EC006098DA /* SnapKit */; };
 		CF221E682AB59566006098DA /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E672AB59566006098DA /* CombineCocoa */; };
+		CF221E6A2AB59953006098DA /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E692AB59953006098DA /* MusicPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		CF221E582AB58634006098DA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CF221E5E2AB587BE006098DA /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		CF221E602AB5883A006098DA /* PlayerHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHelperView.swift; sourceTree = "<group>"; };
+		CF221E692AB59953006098DA /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				CF221E422AB57183006098DA /* SongApiService.swift */,
 				CF221E442AB5737C006098DA /* ApiServiceType.swift */,
+				CF221E692AB59953006098DA /* MusicPlayer.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				CF221E452AB5737C006098DA /* ApiServiceType.swift in Sources */,
 				CF221E402AB5711A006098DA /* Song.swift in Sources */,
 				CF221E292AB56FEF006098DA /* PlayerViewController.swift in Sources */,
+				CF221E6A2AB59953006098DA /* MusicPlayer.swift in Sources */,
 				CF221E612AB5883A006098DA /* PlayerHelperView.swift in Sources */,
 				CF221E432AB57183006098DA /* SongApiService.swift in Sources */,
 				CF221E5F2AB587BE006098DA /* UIView+Extension.swift in Sources */,

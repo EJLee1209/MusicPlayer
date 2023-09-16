@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         let apiService = SongApiService()
-        let vm = MainViewModel(apiService: apiService)
+        let musicPlayer = MusicPlayer()
+        let vm = MainViewModel(apiService: apiService, musicPlayer: musicPlayer)
         let vc = PlayerViewController(viewModel: vm)
         window.rootViewController = vc
         

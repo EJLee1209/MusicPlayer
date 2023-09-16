@@ -12,31 +12,37 @@ final class MainViewModel {
     
     private var cancellables: Set<AnyCancellable> = .init()
     private let apiService: ApiServiceType
+    private let musicPlayer: MusicPlayer
     
-    init(apiService: ApiServiceType) {
+    init(apiService: ApiServiceType, musicPlayer: MusicPlayer) {
         self.apiService = apiService
+        self.musicPlayer = musicPlayer
         
-        
+        self.isPlaying
+            .dropFirst()
+            .sink { [weak self] state in
+                self?.playOrPauseMusic(isPlaying: state)
+            }.store(in: &cancellables)
     }
     
     
     //MARK: - output
-    private let songSubject: PassthroughSubject<Song, Never> = .init()
+    private let songSubject: CurrentValueSubject<Song?, Never> = .init(nil)
     // 곡 명
     var songTitle: AnyPublisher<String?, Never> {
-        return songSubject.map { $0.title }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+        return songSubject.map { $0?.title }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     // 아티스트명
     var songArtist: AnyPublisher<String?, Never> {
-        return songSubject.map { $0.singer }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+        return songSubject.map { $0?.singer }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     // 앨범명
     var songAlbum: AnyPublisher<String?, Never> {
-        return songSubject.map { $0.album }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+        return songSubject.map { $0?.album }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     // 이미지 url
     var songImageUrl: AnyPublisher<URL, Never> {
-        return songSubject.compactMap { URL(string: $0.image) }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+        return songSubject.compactMap { URL(string: $0?.image ?? "") }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     
     // 재생 중 / 재생 중 아님
@@ -55,5 +61,19 @@ final class MainViewModel {
     func togglePlayState() {
         isPlaying.send(!isPlaying.value)
     }
+    
+    
+    //MARK: - Helpers
+    private func playOrPauseMusic(isPlaying: Bool) {
+        print(#function)
+        if isPlaying {
+            guard let urlString = self.songSubject.value?.file else { return } 
+            print(urlString)
+            self.musicPlayer.playMusic(musicUrlString: urlString)
+        } else {
+            self.musicPlayer.pauseMusic()
+        }
+    }
+    
     
 }
