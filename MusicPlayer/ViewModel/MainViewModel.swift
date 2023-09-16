@@ -45,6 +45,15 @@ final class MainViewModel {
         return songSubject.compactMap { URL(string: $0?.image ?? "") }.receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     
+    // 경과 시간
+    var elapsedTimePublisher: AnyPublisher<String?, Never> {
+        return musicPlayer.elapsedTimePublisher
+    }
+    // 총 시간
+    var totalTimePublisher: AnyPublisher<String?, Never> {
+        return musicPlayer.totalTimePublisher
+    }
+    
     // 재생 중 / 재생 중 아님
     var isPlaying: CurrentValueSubject<Bool, Never> = .init(false)
     
@@ -55,6 +64,7 @@ final class MainViewModel {
                 print(error)
             } receiveValue: { [weak self] song in
                 self?.songSubject.send(song)
+                self?.musicPlayer.setup(musicUrlString: song.file)
             }.store(in: &cancellables)
     }
     
@@ -65,11 +75,8 @@ final class MainViewModel {
     
     //MARK: - Helpers
     private func playOrPauseMusic(isPlaying: Bool) {
-        print(#function)
         if isPlaying {
-            guard let urlString = self.songSubject.value?.file else { return } 
-            print(urlString)
-            self.musicPlayer.playMusic(musicUrlString: urlString)
+            self.musicPlayer.playMusic()
         } else {
             self.musicPlayer.pauseMusic()
         }

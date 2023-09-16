@@ -20,6 +20,31 @@ final class PlayerHelperView: UIView {
         return view
     }()
     
+    private let elapsedTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = ThemeFont.regular(ofSize: 12)
+        label.textColor = ThemeColor.primary
+        label.text = "00:00"
+        return label
+    }()
+    
+    private let totalTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = ThemeFont.regular(ofSize: 12)
+        label.textColor = ThemeColor.gray
+        label.text = "00:00"
+        return label
+    }()
+    
+    private lazy var hStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [elapsedTimeLabel, totalTimeLabel])
+        sv.axis = .horizontal
+        sv.distribution = .equalSpacing
+        return sv
+    }()
+    
+    private let spacer: UIView = .init()
+    
     private let playButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -27,9 +52,9 @@ final class PlayerHelperView: UIView {
     }()
     
     private lazy var vStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [seekBar,playButton])
+        let sv = UIStackView(arrangedSubviews: [seekBar,hStackView,spacer,playButton])
         sv.axis = .vertical
-        sv.spacing = 30
+        sv.spacing = 4
         sv.alignment = .center
         sv.distribution = .fillProportionally
         return sv
@@ -59,6 +84,14 @@ final class PlayerHelperView: UIView {
             make.width.equalTo(vStackView.snp.width)
         }
         
+        hStackView.snp.makeConstraints { make in
+            make.width.equalTo(vStackView.snp.width)
+        }
+        
+        spacer.snp.makeConstraints { make in
+            make.size.equalTo(30)
+        }
+        
         playButton.snp.makeConstraints { make in
             make.size.equalTo(30)
         }
@@ -83,6 +116,14 @@ final class PlayerHelperView: UIView {
                     self?.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
                 }
             }.store(in: &cancellables)
+        
+        viewModel.elapsedTimePublisher
+            .assign(to: \.text, on: self.elapsedTimeLabel)
+            .store(in: &cancellables)
+        
+        viewModel.totalTimePublisher
+            .assign(to: \.text, on: self.totalTimeLabel)
+            .store(in: &cancellables)
     }
 }
 
