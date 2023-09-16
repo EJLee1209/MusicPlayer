@@ -59,12 +59,14 @@ final class MusicPlayer {
                   !totalTimeSecondsFloat.isNaN,
                   !totalTimeSecondsFloat.isInfinite else { return }
             
+            print(elapsedTimeSecondsFloat)
             self?.elapsedTimeSubject.send(self?.formatTime(time: elapsedTimeSecondsFloat))
             self?.totalTimeSubject.send(self?.formatTime(time: totalTimeSecondsFloat))
         }
     }
     
     private func formatTime(time: Float64) -> String {
+        
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)

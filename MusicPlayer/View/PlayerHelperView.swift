@@ -22,7 +22,7 @@ final class PlayerHelperView: UIView {
     
     private let elapsedTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = ThemeFont.regular(ofSize: 12)
+        label.font = ThemeFont.bold(ofSize: 12)
         label.textColor = ThemeColor.primary
         label.text = "00:00"
         return label
@@ -30,7 +30,7 @@ final class PlayerHelperView: UIView {
     
     private let totalTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = ThemeFont.regular(ofSize: 12)
+        label.font = ThemeFont.bold(ofSize: 12)
         label.textColor = ThemeColor.gray
         label.text = "00:00"
         return label

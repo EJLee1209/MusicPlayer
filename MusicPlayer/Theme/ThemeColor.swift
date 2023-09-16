@@ -8,7 +8,7 @@
 import UIKit
 
 struct ThemeColor {
-    static let primary = UIColor(hexString: "916DB3")
+    static let primary = UIColor(hexString: "6D67E4")
     static let gray = UIColor(hexString: "ACACAC")
 }
 

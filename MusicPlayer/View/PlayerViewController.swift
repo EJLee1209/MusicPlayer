@@ -24,7 +24,7 @@ class PlayerViewController: UIViewController {
     //MARK: - Properties
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = ThemeFont.bold(ofSize: 16)
+        label.font = ThemeFont.bold(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -35,15 +35,6 @@ class PlayerViewController: UIViewController {
         let label = UILabel()
         label.font = ThemeFont.regular(ofSize: 14)
         label.textColor = .white
-        label.textAlignment = .center
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        return label
-    }()
-    
-    private let albumLabel: UILabel = {
-        let label = UILabel()
-        label.font = ThemeFont.regular(ofSize: 14)
-        label.textColor = ThemeColor.gray
         label.textAlignment = .center
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
@@ -63,7 +54,7 @@ class PlayerViewController: UIViewController {
     private let playerView: PlayerHelperView = .init()
     
     private lazy var vStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [titleLabel, artistLabel, albumLabel, spacer1, albumImageView, spacer2, playerView])
+        let sv = UIStackView(arrangedSubviews: [titleLabel, artistLabel, spacer1, albumImageView, spacer2, playerView])
         sv.axis = .vertical
         sv.spacing = 2
         sv.alignment = .center
@@ -88,11 +79,16 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNav()
         layout()
         bind()
     }
     
     //MARK: - Helpers
+    private func setupNav() {
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+    }
+    
     private func layout() {
         view.backgroundColor = .black
         view.addSubview(vStackView)
@@ -118,16 +114,16 @@ class PlayerViewController: UIViewController {
     
     private func bind() {
         // view binding
+        viewModel.songAlbum
+            .assign(to: \.title, on: navigationItem)
+            .store(in: &cancellables)
+        
         viewModel.songTitle
             .assign(to: \.text, on: self.titleLabel)
             .store(in: &cancellables)
         
         viewModel.songArtist
             .assign(to: \.text, on: self.artistLabel)
-            .store(in: &cancellables)
-        
-        viewModel.songAlbum
-            .assign(to: \.text, on: self.albumLabel)
             .store(in: &cancellables)
         
         viewModel.songImageUrl
