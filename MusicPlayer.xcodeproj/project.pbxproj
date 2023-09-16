@@ -27,6 +27,7 @@
 		CF221E652AB588EC006098DA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E642AB588EC006098DA /* SnapKit */; };
 		CF221E682AB59566006098DA /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E672AB59566006098DA /* CombineCocoa */; };
 		CF221E6A2AB59953006098DA /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E692AB59953006098DA /* MusicPlayer.swift */; };
+		CF221E6C2AB5B2B0006098DA /* SeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E6B2AB5B2B0006098DA /* SeekBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		CF221E5E2AB587BE006098DA /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		CF221E602AB5883A006098DA /* PlayerHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHelperView.swift; sourceTree = "<group>"; };
 		CF221E692AB59953006098DA /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		CF221E6B2AB5B2B0006098DA /* SeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				CF221E282AB56FEF006098DA /* PlayerViewController.swift */,
 				CF221E602AB5883A006098DA /* PlayerHelperView.swift */,
+				CF221E6B2AB5B2B0006098DA /* SeekBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				CF221E532AB58616006098DA /* ThemeColor.swift in Sources */,
 				CF221E252AB56FEF006098DA /* AppDelegate.swift in Sources */,
 				CF221E272AB56FEF006098DA /* SceneDelegate.swift in Sources */,
+				CF221E6C2AB5B2B0006098DA /* SeekBar.swift in Sources */,
 				CF221E562AB58630006098DA /* UIColor+Extension.swift in Sources */,
 				CF221E4A2AB582D5006098DA /* Constants.swift in Sources */,
 			);

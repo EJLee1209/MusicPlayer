@@ -94,7 +94,7 @@ class PlayerViewController: UIViewController {
         view.addSubview(vStackView)
         vStackView.snp.makeConstraints { make in
             make.left.right.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
         }
         

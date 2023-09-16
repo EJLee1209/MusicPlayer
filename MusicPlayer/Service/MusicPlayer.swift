@@ -14,14 +14,14 @@ final class MusicPlayer {
     private var player: AVPlayer?
     
     // 경과 시간 Publisher
-    private let elapsedTimeSubject: CurrentValueSubject<String?, Never> = .init("00:00")
-    var elapsedTimePublisher: AnyPublisher<String?, Never> {
+    private let elapsedTimeSubject: CurrentValueSubject<Float64, Never> = .init(0.0)
+    var elapsedTimePublisher: AnyPublisher<Float64, Never> {
         return elapsedTimeSubject.removeDuplicates().eraseToAnyPublisher()
     }
     
     // 총 시간 Publisher
-    private let totalTimeSubject: CurrentValueSubject<String?, Never> = .init("00:00")
-    var totalTimePublisher: AnyPublisher<String?, Never> {
+    private let totalTimeSubject: CurrentValueSubject<Float64, Never> = .init(0.0)
+    var totalTimePublisher: AnyPublisher<Float64, Never> {
         return totalTimeSubject.removeDuplicates().eraseToAnyPublisher()
     }
     
@@ -44,7 +44,7 @@ final class MusicPlayer {
             
             guard !totalTimeSecondsFloat.isNaN,
                   !totalTimeSecondsFloat.isInfinite else { return }
-            self.totalTimeSubject.send(self.formatTime(time: totalTimeSecondsFloat))
+            self.totalTimeSubject.send(totalTimeSecondsFloat)
         }
     }
     
@@ -60,7 +60,7 @@ final class MusicPlayer {
         print("Audio finished playing")
         NotificationCenter.default.removeObserver(self)
         finishedSubject.send(())
-        elapsedTimeSubject.send("00:00")
+        elapsedTimeSubject.send(0.0)
     }
     
     private func addPeriodicTimeObserver() {
@@ -75,16 +75,14 @@ final class MusicPlayer {
                   !totalTimeSecondsFloat.isInfinite else { return }
             
             print(elapsedTimeSecondsFloat)
-            self?.elapsedTimeSubject.send(self?.formatTime(time: elapsedTimeSecondsFloat))
-            self?.totalTimeSubject.send(self?.formatTime(time: totalTimeSecondsFloat))
+            
+            self?.elapsedTimeSubject.send(elapsedTimeSecondsFloat)
+            self?.totalTimeSubject.send(totalTimeSecondsFloat)
         }
     }
     
-    private func formatTime(time: Float64) -> String {
-        
-        let minutes = Int(time) / 60
-        let seconds = Int(time) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+    func seek(to seconds: Float64) {
+        self.player?.seek(to: CMTimeMakeWithSeconds(seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
     }
 }
 

@@ -12,13 +12,7 @@ import CombineCocoa
 final class PlayerHelperView: UIView {
     
     //MARK: - Properties
-    private let seekBar: UIProgressView = {
-        let view = UIProgressView()
-        view.progressTintColor = ThemeColor.primary
-        view.trackTintColor = ThemeColor.gray
-        view.progress = 0.5
-        return view
-    }()
+    private let seekBar: SeekBar = .init()
     
     private let elapsedTimeLabel: UILabel = {
         let label = UILabel()
@@ -48,13 +42,14 @@ final class PlayerHelperView: UIView {
     private let playButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
     private lazy var vStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [seekBar,hStackView,spacer,playButton])
         sv.axis = .vertical
-        sv.spacing = 4
+        sv.spacing = 8
         sv.alignment = .center
         sv.distribution = .fillProportionally
         return sv
@@ -82,6 +77,7 @@ final class PlayerHelperView: UIView {
         
         seekBar.snp.makeConstraints { make in
             make.width.equalTo(vStackView.snp.width)
+            make.height.equalTo(30)
         }
         
         hStackView.snp.makeConstraints { make in
@@ -89,11 +85,11 @@ final class PlayerHelperView: UIView {
         }
         
         spacer.snp.makeConstraints { make in
-            make.size.equalTo(30)
+            make.size.equalTo(20)
         }
         
         playButton.snp.makeConstraints { make in
-            make.size.equalTo(30)
+            make.size.equalTo(28)
         }
         
         playButton.imageView?.snp.makeConstraints { make in
@@ -117,13 +113,15 @@ final class PlayerHelperView: UIView {
                 }
             }.store(in: &cancellables)
         
-        viewModel.elapsedTimePublisher
+        viewModel.formatedElapsedTimePublisher
             .assign(to: \.text, on: self.elapsedTimeLabel)
             .store(in: &cancellables)
         
-        viewModel.totalTimePublisher
+        viewModel.formatedTotalTimePublisher
             .assign(to: \.text, on: self.totalTimeLabel)
             .store(in: &cancellables)
+        
+        seekBar.bind(viewModel: viewModel)
     }
 }
 
