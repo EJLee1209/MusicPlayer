@@ -9,21 +9,32 @@
 /* Begin PBXBuildFile section */
 		CF221E252AB56FEF006098DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E242AB56FEF006098DA /* AppDelegate.swift */; };
 		CF221E272AB56FEF006098DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E262AB56FEF006098DA /* SceneDelegate.swift */; };
-		CF221E292AB56FEF006098DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E282AB56FEF006098DA /* ViewController.swift */; };
+		CF221E292AB56FEF006098DA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E282AB56FEF006098DA /* PlayerViewController.swift */; };
 		CF221E2C2AB56FEF006098DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2A2AB56FEF006098DA /* Main.storyboard */; };
 		CF221E2E2AB56FF0006098DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2D2AB56FF0006098DA /* Assets.xcassets */; };
 		CF221E312AB56FF0006098DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2F2AB56FF0006098DA /* LaunchScreen.storyboard */; };
+		CF221E3A2AB570DE006098DA /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E392AB570DE006098DA /* SDWebImage */; };
+		CF221E402AB5711A006098DA /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E3F2AB5711A006098DA /* Song.swift */; };
+		CF221E432AB57183006098DA /* SongApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E422AB57183006098DA /* SongApiService.swift */; };
+		CF221E452AB5737C006098DA /* ApiServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E442AB5737C006098DA /* ApiServiceType.swift */; };
+		CF221E472AB58231006098DA /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E462AB58231006098DA /* MainViewModel.swift */; };
+		CF221E4A2AB582D5006098DA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E492AB582D5006098DA /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CF221E212AB56FEF006098DA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF221E242AB56FEF006098DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF221E262AB56FEF006098DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CF221E282AB56FEF006098DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CF221E282AB56FEF006098DA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		CF221E2B2AB56FEF006098DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF221E2D2AB56FF0006098DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF221E302AB56FF0006098DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF221E322AB56FF0006098DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF221E3F2AB5711A006098DA /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		CF221E422AB57183006098DA /* SongApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongApiService.swift; sourceTree = "<group>"; };
+		CF221E442AB5737C006098DA /* ApiServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceType.swift; sourceTree = "<group>"; };
+		CF221E462AB58231006098DA /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		CF221E492AB582D5006098DA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF221E3A2AB570DE006098DA /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +68,68 @@
 		CF221E232AB56FEF006098DA /* MusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				CF221E242AB56FEF006098DA /* AppDelegate.swift */,
-				CF221E262AB56FEF006098DA /* SceneDelegate.swift */,
-				CF221E282AB56FEF006098DA /* ViewController.swift */,
+				CF221E482AB582CF006098DA /* Utils */,
+				CF221E3E2AB57107006098DA /* App */,
+				CF221E412AB5716F006098DA /* Service */,
+				CF221E3B2AB570F4006098DA /* Model */,
+				CF221E3C2AB570FC006098DA /* View */,
+				CF221E3D2AB57101006098DA /* ViewModel */,
 				CF221E2A2AB56FEF006098DA /* Main.storyboard */,
 				CF221E2D2AB56FF0006098DA /* Assets.xcassets */,
 				CF221E2F2AB56FF0006098DA /* LaunchScreen.storyboard */,
 				CF221E322AB56FF0006098DA /* Info.plist */,
 			);
 			path = MusicPlayer;
+			sourceTree = "<group>";
+		};
+		CF221E3B2AB570F4006098DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E3F2AB5711A006098DA /* Song.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CF221E3C2AB570FC006098DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E282AB56FEF006098DA /* PlayerViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CF221E3D2AB57101006098DA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E462AB58231006098DA /* MainViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CF221E3E2AB57107006098DA /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E242AB56FEF006098DA /* AppDelegate.swift */,
+				CF221E262AB56FEF006098DA /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CF221E412AB5716F006098DA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E422AB57183006098DA /* SongApiService.swift */,
+				CF221E442AB5737C006098DA /* ApiServiceType.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CF221E482AB582CF006098DA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E492AB582D5006098DA /* Constants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +148,9 @@
 			dependencies = (
 			);
 			name = MusicPlayer;
+			packageProductDependencies = (
+				CF221E392AB570DE006098DA /* SDWebImage */,
+			);
 			productName = MusicPlayer;
 			productReference = CF221E212AB56FEF006098DA /* MusicPlayer.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +179,9 @@
 				Base,
 			);
 			mainGroup = CF221E182AB56FEF006098DA;
+			packageReferences = (
+				CF221E382AB570DE006098DA /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = CF221E222AB56FEF006098DA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +209,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF221E292AB56FEF006098DA /* ViewController.swift in Sources */,
+				CF221E472AB58231006098DA /* MainViewModel.swift in Sources */,
+				CF221E452AB5737C006098DA /* ApiServiceType.swift in Sources */,
+				CF221E402AB5711A006098DA /* Song.swift in Sources */,
+				CF221E292AB56FEF006098DA /* PlayerViewController.swift in Sources */,
+				CF221E432AB57183006098DA /* SongApiService.swift in Sources */,
 				CF221E252AB56FEF006098DA /* AppDelegate.swift in Sources */,
 				CF221E272AB56FEF006098DA /* SceneDelegate.swift in Sources */,
+				CF221E4A2AB582D5006098DA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,9 +368,9 @@
 				INFOPLIST_FILE = MusicPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,9 +396,9 @@
 				INFOPLIST_FILE = MusicPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,6 +434,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CF221E382AB570DE006098DA /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CF221E392AB570DE006098DA /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF221E382AB570DE006098DA /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CF221E192AB56FEF006098DA /* Project object */;
 }

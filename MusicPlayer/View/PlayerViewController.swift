@@ -7,13 +7,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PlayerViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        layout()
     }
-
-
+    
+    private func layout() {
+        view.backgroundColor = .systemBlue
+    }
 }
 
