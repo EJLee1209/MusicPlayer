@@ -25,11 +25,19 @@ final class MusicPlayer {
         return totalTimeSubject.removeDuplicates().eraseToAnyPublisher()
     }
     
+    // 종료 Publisher
+    private let finishedSubject: PassthroughSubject<Void, Never> = .init()
+    var finishedPublisher: AnyPublisher<Void, Never> {
+        return finishedSubject.eraseToAnyPublisher()
+    }
+    
     func setup(musicUrlString: String) {
         guard let url = URL(string: musicUrlString) else { return }
         player = AVPlayer(url: url)
         
         addPeriodicTimeObserver()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             let totalTimeSecondsFloat = CMTimeGetSeconds(self.player?.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
@@ -46,6 +54,13 @@ final class MusicPlayer {
     
     func pauseMusic() {
         player?.pause()
+    }
+    
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        print("Audio finished playing")
+        NotificationCenter.default.removeObserver(self)
+        finishedSubject.send(())
+        elapsedTimeSubject.send("00:00")
     }
     
     private func addPeriodicTimeObserver() {

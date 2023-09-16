@@ -23,6 +23,12 @@ final class MainViewModel {
             .sink { [weak self] state in
                 self?.playOrPauseMusic(isPlaying: state)
             }.store(in: &cancellables)
+        
+        self.musicPlayer.finishedPublisher
+            .sink { [weak self] _ in
+                self?.musicPlayer.setup(musicUrlString: self?.songSubject.value?.file ?? "")
+                self?.isPlaying.send(false)
+            }.store(in: &cancellables)
     }
     
     
