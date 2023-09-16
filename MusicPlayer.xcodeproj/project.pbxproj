@@ -19,6 +19,9 @@
 		CF221E452AB5737C006098DA /* ApiServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E442AB5737C006098DA /* ApiServiceType.swift */; };
 		CF221E472AB58231006098DA /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E462AB58231006098DA /* MainViewModel.swift */; };
 		CF221E4A2AB582D5006098DA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E492AB582D5006098DA /* Constants.swift */; };
+		CF221E532AB58616006098DA /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E522AB58616006098DA /* ThemeColor.swift */; };
+		CF221E542AB58616006098DA /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E512AB58616006098DA /* ThemeFont.swift */; };
+		CF221E562AB58630006098DA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E552AB58630006098DA /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,10 @@
 		CF221E442AB5737C006098DA /* ApiServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceType.swift; sourceTree = "<group>"; };
 		CF221E462AB58231006098DA /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CF221E492AB582D5006098DA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CF221E512AB58616006098DA /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
+		CF221E522AB58616006098DA /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
+		CF221E552AB58630006098DA /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Extension.swift"; path = "../../../HallymNotice/HallymNotice/Utils/Extension/UIColor+Extension.swift"; sourceTree = "<group>"; };
+		CF221E582AB58634006098DA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +75,7 @@
 		CF221E232AB56FEF006098DA /* MusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				CF221E502AB58616006098DA /* Theme */,
 				CF221E482AB582CF006098DA /* Utils */,
 				CF221E3E2AB57107006098DA /* App */,
 				CF221E412AB5716F006098DA /* Service */,
@@ -127,9 +135,28 @@
 		CF221E482AB582CF006098DA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CF221E572AB58634006098DA /* Extensions */,
+				CF221E552AB58630006098DA /* UIColor+Extension.swift */,
 				CF221E492AB582D5006098DA /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		CF221E502AB58616006098DA /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E512AB58616006098DA /* ThemeFont.swift */,
+				CF221E522AB58616006098DA /* ThemeColor.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CF221E572AB58634006098DA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CF221E582AB58634006098DA /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,13 +236,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF221E542AB58616006098DA /* ThemeFont.swift in Sources */,
 				CF221E472AB58231006098DA /* MainViewModel.swift in Sources */,
 				CF221E452AB5737C006098DA /* ApiServiceType.swift in Sources */,
 				CF221E402AB5711A006098DA /* Song.swift in Sources */,
 				CF221E292AB56FEF006098DA /* PlayerViewController.swift in Sources */,
 				CF221E432AB57183006098DA /* SongApiService.swift in Sources */,
+				CF221E532AB58616006098DA /* ThemeColor.swift in Sources */,
 				CF221E252AB56FEF006098DA /* AppDelegate.swift in Sources */,
 				CF221E272AB56FEF006098DA /* SceneDelegate.swift in Sources */,
+				CF221E562AB58630006098DA /* UIColor+Extension.swift in Sources */,
 				CF221E4A2AB582D5006098DA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
