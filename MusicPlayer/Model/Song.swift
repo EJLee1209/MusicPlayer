@@ -8,9 +8,9 @@
 import Foundation
 
 struct Song: Codable {
-    let singer: String // 아티스트명
-    let album: String // 앨범명
-    let title: String // 곡명
+    let singer: String? // 아티스트명
+    let album: String? // 앨범명
+    let title: String? // 곡명
     let duration: Int
     let image: String // 앨범 커버 이미지
     let file: String // mp3 파일 링크

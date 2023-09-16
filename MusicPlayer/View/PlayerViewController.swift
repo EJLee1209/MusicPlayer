@@ -17,14 +17,57 @@
 
 import UIKit
 import Combine
+import SnapKit
+import SDWebImage
 
 class PlayerViewController: UIViewController {
     //MARK: - Properties
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = ThemeFont.bold(ofSize: 16)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        return label
+    }()
+    
+    private let artistLabel: UILabel = {
+        let label = UILabel()
+        label.font = ThemeFont.regular(ofSize: 14)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        return label
+    }()
+    
     private let albumLabel: UILabel = {
         let label = UILabel()
-        label.font = ThemeFont.regular(ofSize: 13)
+        label.font = ThemeFont.regular(ofSize: 14)
         label.textColor = ThemeColor.gray
+        label.textAlignment = .center
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
+    }()
+    
+    private let spacer1: UIView = .init()
+    
+    private let albumImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.addCornerRadius(8)
+        return iv
+    }()
+    
+    private let spacer2: UIView = .init()
+    
+    private let playerView: PlayerHelperView = .init()
+    
+    private lazy var vStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [titleLabel, artistLabel, albumLabel, spacer1, albumImageView, spacer2, playerView])
+        sv.axis = .vertical
+        sv.spacing = 2
+        sv.alignment = .center
+        return sv
     }()
     
     private var cancellables: Set<AnyCancellable> = .init()
@@ -52,14 +95,51 @@ class PlayerViewController: UIViewController {
     //MARK: - Helpers
     private func layout() {
         view.backgroundColor = .black
+        view.addSubview(vStackView)
+        vStackView.snp.makeConstraints { make in
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
+        }
+        
+        spacer1.snp.makeConstraints { make in
+            make.size.equalTo(20)
+        }
+        
+        albumImageView.snp.makeConstraints { make in
+            make.size.equalTo(view.frame.width * 0.7)
+        }
+        
+        playerView.snp.makeConstraints { make in
+            make.width.equalTo(view.frame.width * 0.8)
+        }
+        
     }
     
     private func bind() {
-        viewModel.songPublisher
-            .sink { song in
-                print(song)
+        // view binding
+        viewModel.songTitle
+            .assign(to: \.text, on: self.titleLabel)
+            .store(in: &cancellables)
+        
+        viewModel.songArtist
+            .assign(to: \.text, on: self.artistLabel)
+            .store(in: &cancellables)
+        
+        viewModel.songAlbum
+            .assign(to: \.text, on: self.albumLabel)
+            .store(in: &cancellables)
+        
+        viewModel.songImageUrl
+            .sink { [weak self] url in
                 
+                self?.albumImageView.sd_setImage(with: url)
             }.store(in: &cancellables)
+        
+        // 노래 api 요청
+        viewModel.requestMusic()
+        
+        playerView.bind(viewModel: self.viewModel)
         
     }
 }
