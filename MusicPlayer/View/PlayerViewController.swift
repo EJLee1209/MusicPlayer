@@ -13,6 +13,13 @@
  재생 시 현재 재생되고 있는 구간대의 가사가 실시간으로 표시됩니다. (완료)
  정지 버튼을 누르면 재생 중이던 음악이 멈춥니다. (완료)
  seekbar를 조작하여 재생 시작 시점을 이동시킬 수 있습니다. (완료)
+ 
+ 전체 가사 보기 화면
+ 전체 가사가 띄워진 화면이 있으며, 특정 가사 부분으로 이동할 수 있는 토글 버튼이 존재합니다.
+ 토글 버튼 on: 특정 가사 터치 시 해당 구간부터 재생
+ 토글 버튼 off: 특정 가사 터치 시 전체 가사 화면 닫기 (완료)
+ 전체 가사 화면 닫기 버튼이 있습니다. (완료)
+ 현재 재생 중인 부분의 가사가 하이라이팅 됩니다.
  */
 
 import UIKit
@@ -33,7 +40,6 @@ class PlayerViewController: UIViewController {
         let view = UIVisualEffectView(effect: effect)
         return view
     }()
-    
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -85,9 +91,18 @@ class PlayerViewController: UIViewController {
         tv.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLyricTapped))
         tv.addGestureRecognizer(tapGesture)
+        tv.contentInset = .init(top: 0, left: 0, bottom: 60, right: 0)
         return tv
     }()
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.tintColor = .white
+        button.isHidden = true
+        button.addTarget(self, action: #selector(handleLyricTapped), for: .touchUpInside)
+        return button
+    }()
     
     private let playerView: PlayerHelperView = .init()
     
@@ -157,6 +172,11 @@ class PlayerViewController: UIViewController {
             make.left.right.equalToSuperview().inset(20)
         }
         
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints { make in
+            make.top.right.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        
     }
     
     private func bind() {
@@ -207,6 +227,7 @@ class PlayerViewController: UIViewController {
     //MARK: - Actions
     @objc private func handleLyricTapped() {
         viewModel.isLyricsExpanded.toggle()
+        closeButton.isHidden = !viewModel.isLyricsExpanded
         
         if viewModel.isLyricsExpanded {
             albumImageView.snp.remakeConstraints { make in
@@ -225,6 +246,8 @@ class PlayerViewController: UIViewController {
                 make.left.right.equalToSuperview().inset(20)
                 make.bottom.equalTo(playerView.snp.top).offset(-20)
             }
+            
+            
         } else {
             albumImageView.snp.remakeConstraints { make in
                 make.top.equalTo(vStackView.snp.bottom).offset(20)
