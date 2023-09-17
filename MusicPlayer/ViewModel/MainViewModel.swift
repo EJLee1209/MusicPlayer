@@ -102,6 +102,8 @@ final class MainViewModel {
     //MARK: - Input
     let progress: PassthroughSubject<CGFloat, Never> = .init()
     
+    var isLyricsExpanded: Bool = false
+    
     func requestMusic() {
         self.apiService.fetchMusic(endPoint: Constants.songEndPoint)
             .sink { error in

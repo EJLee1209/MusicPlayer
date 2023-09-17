@@ -206,7 +206,45 @@ class PlayerViewController: UIViewController {
     
     //MARK: - Actions
     @objc private func handleLyricTapped() {
-        print("가사 탭")
+        viewModel.isLyricsExpanded.toggle()
+        
+        if viewModel.isLyricsExpanded {
+            albumImageView.snp.remakeConstraints { make in
+                make.centerY.equalTo(vStackView)
+                make.right.equalTo(vStackView.snp.left).offset(-10)
+                make.size.equalTo(60)
+            }
+            
+            vStackView.snp.updateConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+                make.left.equalToSuperview().offset(80)
+            }
+            
+            lyricTableView.snp.remakeConstraints { make in
+                make.top.equalTo(albumImageView.snp.bottom).offset(30)
+                make.left.right.equalToSuperview().inset(20)
+                make.bottom.equalTo(playerView.snp.top).offset(-20)
+            }
+        } else {
+            albumImageView.snp.remakeConstraints { make in
+                make.top.equalTo(vStackView.snp.bottom).offset(20)
+                make.left.right.equalToSuperview().inset(20)
+                make.height.equalTo(albumImageView.snp.width)
+            }
+            
+            vStackView.snp.remakeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+                make.left.equalToSuperview().offset(20)
+            }
+            
+            lyricTableView.snp.remakeConstraints { make in
+                make.top.equalTo(albumImageView.snp.bottom).offset(30)
+                make.left.right.equalToSuperview().inset(20)
+                make.height.equalTo(90)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.5, animations: self.view.layoutIfNeeded)
     }
 }
 
