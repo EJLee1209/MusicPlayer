@@ -104,6 +104,8 @@ final class MainViewModel {
     
     var isLyricsExpanded: Bool = false
     
+    var toggleOnOff: CurrentValueSubject<Bool, Never> = .init(false)
+    
     func requestMusic() {
         self.apiService.fetchMusic(endPoint: Constants.songEndPoint)
             .sink { error in
@@ -122,6 +124,13 @@ final class MainViewModel {
         isPlaying.send(!isPlaying.value)
     }
     
+    func didSelectLyric(index: Int) {
+        print(index)
+        let lyrics = lyricsSubject.value
+        
+        let (time, _) = lyrics[index]
+        progress.send(CGFloat(time))
+    }
     
     //MARK: - Helpers
     private func playOrPauseMusic(isPlaying: Bool) {

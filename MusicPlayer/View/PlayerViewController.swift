@@ -19,11 +19,12 @@
  토글 버튼 on: 특정 가사 터치 시 해당 구간부터 재생
  토글 버튼 off: 특정 가사 터치 시 전체 가사 화면 닫기 (완료)
  전체 가사 화면 닫기 버튼이 있습니다. (완료)
- 현재 재생 중인 부분의 가사가 하이라이팅 됩니다.
+ 현재 재생 중인 부분의 가사가 하이라이팅 됩니다. (완료)
  */
 
 import UIKit
 import Combine
+import CombineCocoa
 import SnapKit
 import SDWebImage
 
@@ -79,6 +80,9 @@ class PlayerViewController: UIViewController {
         return iv
     }()
     
+    
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLyricTapped))
+    
     private lazy var lyricTableView: UITableView = {
         let tv = UITableView()
         tv.rowHeight = 30
@@ -87,11 +91,8 @@ class PlayerViewController: UIViewController {
         tv.showsVerticalScrollIndicator = false
         tv.separatorStyle = .none
         tv.backgroundColor = .clear
-        tv.allowsSelection = false
-        tv.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLyricTapped))
-        tv.addGestureRecognizer(tapGesture)
         tv.contentInset = .init(top: 0, left: 0, bottom: 60, right: 0)
+        tv.delegate = self
         return tv
     }()
     
@@ -101,6 +102,14 @@ class PlayerViewController: UIViewController {
         button.tintColor = .white
         button.isHidden = true
         button.addTarget(self, action: #selector(handleLyricTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var toggleButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "scope"), for: .normal)
+        button.tintColor = .white
+        button.isHidden = true
         return button
     }()
     
@@ -127,6 +136,7 @@ class PlayerViewController: UIViewController {
         setupNav()
         layout()
         bind()
+        addLyricGestureRecognizer()
     }
     
     //MARK: - Helpers
@@ -177,6 +187,12 @@ class PlayerViewController: UIViewController {
             make.top.right.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         
+        view.addSubview(toggleButton)
+        toggleButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(12)
+            make.centerY.equalToSuperview()
+        }
+        
     }
     
     private func bind() {
@@ -215,6 +231,26 @@ class PlayerViewController: UIViewController {
         viewModel.requestMusic()
         
         playerView.bind(viewModel: self.viewModel)
+        
+        toggleButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.viewModel.toggleOnOff.send(!(self?.viewModel.toggleOnOff.value ?? true))
+            }.store(in: &cancellables)
+        
+        viewModel.toggleOnOff
+            .sink { [weak self] state in
+                self?.lyricTableView.allowsSelection = state
+                
+                if state {
+                    self?.toggleButton.tintColor = ThemeColor.primary
+                    self?.removeLyricGestureRecognizer()
+                } else {
+                    self?.toggleButton.tintColor = ThemeColor.gray
+                    self?.addLyricGestureRecognizer()
+                }
+            }.store(in: &cancellables)
+        
+        
     }
     
     private func highlightLyric(for row: Int) {
@@ -224,10 +260,23 @@ class PlayerViewController: UIViewController {
         lyricTableView.reloadData()
     }
     
+    private func addLyricGestureRecognizer() {
+        lyricTableView.isUserInteractionEnabled = true
+        lyricTableView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func removeLyricGestureRecognizer() {
+        lyricTableView.removeGestureRecognizer(tapGesture)
+    }
+    
     //MARK: - Actions
     @objc private func handleLyricTapped() {
+        if viewModel.toggleOnOff.value { return }
+        
         viewModel.isLyricsExpanded.toggle()
         closeButton.isHidden = !viewModel.isLyricsExpanded
+        toggleButton.isHidden = !viewModel.isLyricsExpanded
+        lyricTableView.reloadData()
         
         if viewModel.isLyricsExpanded {
             albumImageView.snp.remakeConstraints { make in
@@ -243,7 +292,8 @@ class PlayerViewController: UIViewController {
             
             lyricTableView.snp.remakeConstraints { make in
                 make.top.equalTo(albumImageView.snp.bottom).offset(30)
-                make.left.right.equalToSuperview().inset(20)
+                make.left.equalToSuperview().offset(20)
+                make.right.equalTo(toggleButton.snp.left).inset(20)
                 make.bottom.equalTo(playerView.snp.top).offset(-20)
             }
             
@@ -280,9 +330,18 @@ extension PlayerViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "lyricCell", for: indexPath)
         cell.textLabel?.text = viewModel.lyricsSubject.value[indexPath.row].1
         cell.textLabel?.textColor = viewModel.lyricIndex.value == indexPath.row ? .white : ThemeColor.gray
-        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.textAlignment = viewModel.isLyricsExpanded ? .left : .center
         cell.textLabel?.font = viewModel.lyricIndex.value == indexPath.row ? UIFont.boldSystemFont(ofSize: 18) : UIFont.systemFont(ofSize: 16)
         cell.backgroundColor = .clear
         return cell
     }
+}
+
+extension PlayerViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectLyric(index: indexPath.row)
+    }
+    
 }
