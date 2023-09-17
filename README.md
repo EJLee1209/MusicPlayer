@@ -31,5 +31,6 @@
 - Snapkit
 - SDWebImage
 - URLSession
+- AVPlayer
 - MVVM
 
