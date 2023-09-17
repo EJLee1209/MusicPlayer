@@ -15,8 +15,8 @@
  seekbar를 조작하여 재생 시작 시점을 이동시킬 수 있습니다. (완료)
  
  전체 가사 보기 화면
- 전체 가사가 띄워진 화면이 있으며, 특정 가사 부분으로 이동할 수 있는 토글 버튼이 존재합니다.
- 토글 버튼 on: 특정 가사 터치 시 해당 구간부터 재생
+ 전체 가사가 띄워진 화면이 있으며, 특정 가사 부분으로 이동할 수 있는 토글 버튼이 존재합니다. (완료)
+ 토글 버튼 on: 특정 가사 터치 시 해당 구간부터 재생 (완료)
  토글 버튼 off: 특정 가사 터치 시 전체 가사 화면 닫기 (완료)
  전체 가사 화면 닫기 버튼이 있습니다. (완료)
  현재 재생 중인 부분의 가사가 하이라이팅 됩니다. (완료)
@@ -101,7 +101,7 @@ class PlayerViewController: UIViewController {
         button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         button.tintColor = .white
         button.isHidden = true
-        button.addTarget(self, action: #selector(handleLyricTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(closeLyric), for: .touchUpInside)
         return button
     }()
     
@@ -273,9 +273,14 @@ class PlayerViewController: UIViewController {
     @objc private func handleLyricTapped() {
         if viewModel.toggleOnOff.value { return }
         
+        self.closeLyric()
+    }
+    
+    @objc private func closeLyric() {
         viewModel.isLyricsExpanded.toggle()
         closeButton.isHidden = !viewModel.isLyricsExpanded
         toggleButton.isHidden = !viewModel.isLyricsExpanded
+        viewModel.toggleOnOff.send(false)
         lyricTableView.reloadData()
         
         if viewModel.isLyricsExpanded {
@@ -333,6 +338,8 @@ extension PlayerViewController: UITableViewDataSource {
         cell.textLabel?.textAlignment = viewModel.isLyricsExpanded ? .left : .center
         cell.textLabel?.font = viewModel.lyricIndex.value == indexPath.row ? UIFont.boldSystemFont(ofSize: 18) : UIFont.systemFont(ofSize: 16)
         cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
         return cell
     }
 }
@@ -340,7 +347,7 @@ extension PlayerViewController: UITableViewDataSource {
 extension PlayerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
         viewModel.didSelectLyric(index: indexPath.row)
     }
     
