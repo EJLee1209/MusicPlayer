@@ -10,7 +10,6 @@
 		CF221E252AB56FEF006098DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E242AB56FEF006098DA /* AppDelegate.swift */; };
 		CF221E272AB56FEF006098DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E262AB56FEF006098DA /* SceneDelegate.swift */; };
 		CF221E292AB56FEF006098DA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF221E282AB56FEF006098DA /* PlayerViewController.swift */; };
-		CF221E2C2AB56FEF006098DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2A2AB56FEF006098DA /* Main.storyboard */; };
 		CF221E2E2AB56FF0006098DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2D2AB56FF0006098DA /* Assets.xcassets */; };
 		CF221E312AB56FF0006098DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF221E2F2AB56FF0006098DA /* LaunchScreen.storyboard */; };
 		CF221E3A2AB570DE006098DA /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CF221E392AB570DE006098DA /* SDWebImage */; };
@@ -35,7 +34,6 @@
 		CF221E242AB56FEF006098DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF221E262AB56FEF006098DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CF221E282AB56FEF006098DA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		CF221E2B2AB56FEF006098DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF221E2D2AB56FF0006098DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF221E302AB56FF0006098DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF221E322AB56FF0006098DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				CF221E3B2AB570F4006098DA /* Model */,
 				CF221E3C2AB570FC006098DA /* View */,
 				CF221E3D2AB57101006098DA /* ViewModel */,
-				CF221E2A2AB56FEF006098DA /* Main.storyboard */,
 				CF221E2D2AB56FF0006098DA /* Assets.xcassets */,
 				CF221E2F2AB56FF0006098DA /* LaunchScreen.storyboard */,
 				CF221E322AB56FF0006098DA /* Info.plist */,
@@ -245,7 +242,6 @@
 			files = (
 				CF221E312AB56FF0006098DA /* LaunchScreen.storyboard in Resources */,
 				CF221E2E2AB56FF0006098DA /* Assets.xcassets in Resources */,
-				CF221E2C2AB56FEF006098DA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,14 +273,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CF221E2A2AB56FEF006098DA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CF221E2B2AB56FEF006098DA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CF221E2F2AB56FF0006098DA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

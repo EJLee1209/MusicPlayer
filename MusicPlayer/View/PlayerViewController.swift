@@ -39,7 +39,7 @@ class PlayerViewController: UIViewController {
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()
-    
+
     private let spacer1: UIView = .init()
     
     private let albumImageView: UIImageView = {
@@ -49,12 +49,24 @@ class PlayerViewController: UIViewController {
         return iv
     }()
     
+    private lazy var lyricTableView: UITableView = {
+        let tv = UITableView()
+        tv.rowHeight = 30
+        tv.dataSource = self
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: "lyricCell")
+        tv.showsVerticalScrollIndicator = false
+        tv.separatorStyle = .none
+        tv.backgroundColor = .clear
+        tv.allowsSelection = false
+        return tv
+    }()
+    
     private let spacer2: UIView = .init()
     
     private let playerView: PlayerHelperView = .init()
     
     private lazy var vStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [titleLabel, artistLabel, spacer1, albumImageView, spacer2, playerView])
+        let sv = UIStackView(arrangedSubviews: [titleLabel, artistLabel, spacer1, albumImageView, spacer1, lyricTableView, spacer2, playerView])
         sv.axis = .vertical
         sv.spacing = 2
         sv.alignment = .center
@@ -106,6 +118,11 @@ class PlayerViewController: UIViewController {
             make.size.equalTo(view.frame.width * 0.7)
         }
         
+        lyricTableView.snp.makeConstraints { make in
+            make.width.equalTo(view.frame.width)
+            make.height.equalTo(90)
+        }
+        
         playerView.snp.makeConstraints { make in
             make.width.equalTo(view.frame.width * 0.8)
         }
@@ -132,11 +149,44 @@ class PlayerViewController: UIViewController {
                 self?.albumImageView.sd_setImage(with: url)
             }.store(in: &cancellables)
         
+        viewModel.lyricsSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.lyricTableView.reloadData()
+            }.store(in: &cancellables)
+        
+        viewModel.lyricIndex
+            .dropFirst()
+            .sink { [weak self] idx in
+                self?.highlightLyric(for: idx)
+            }.store(in: &cancellables)
+        
         // 노래 api 요청
         viewModel.requestMusic()
         
         playerView.bind(viewModel: self.viewModel)
         
     }
+    
+    private func highlightLyric(for row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        
+        lyricTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        lyricTableView.reloadData()
+    }
 }
 
+extension PlayerViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.lyricsSubject.value.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "lyricCell", for: indexPath)
+        cell.textLabel?.text = viewModel.lyricsSubject.value[indexPath.row].1
+        cell.textLabel?.textColor = viewModel.lyricIndex.value == indexPath.row ? .white : ThemeColor.gray
+        cell.textLabel?.textAlignment = .center
+        cell.backgroundColor = .clear
+        return cell
+    }
+}

@@ -64,7 +64,7 @@ final class MusicPlayer {
     }
     
     private func addPeriodicTimeObserver() {
-        let interval = CMTimeMakeWithSeconds(1, preferredTimescale: Int32(NSEC_PER_SEC))
+        let interval = CMTimeMakeWithSeconds(0.1, preferredTimescale: Int32(NSEC_PER_SEC))
         
         player?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] elapsedTime in
             let elapsedTimeSecondsFloat = CMTimeGetSeconds(elapsedTime)
@@ -74,9 +74,7 @@ final class MusicPlayer {
                   !totalTimeSecondsFloat.isNaN,
                   !totalTimeSecondsFloat.isInfinite else { return }
             
-            print(elapsedTimeSecondsFloat)
-            
-            self?.elapsedTimeSubject.send(elapsedTimeSecondsFloat)
+            self?.elapsedTimeSubject.send(round(elapsedTimeSecondsFloat * 10) / 10)
             self?.totalTimeSubject.send(totalTimeSecondsFloat)
         }
     }
