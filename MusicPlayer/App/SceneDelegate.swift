@@ -20,9 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let musicPlayer = MusicPlayer()
         let vm = MainViewModel(apiService: apiService, musicPlayer: musicPlayer)
         let vc = PlayerViewController(viewModel: vm)
-        let nav = UINavigationController(rootViewController: vc)
         
-        window.rootViewController = nav
+        window.rootViewController = vc
         self.window = window
         self.window?.makeKeyAndVisible()
         

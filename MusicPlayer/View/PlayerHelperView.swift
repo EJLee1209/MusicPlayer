@@ -37,7 +37,6 @@ final class PlayerHelperView: UIView {
         return sv
     }()
     
-    private let spacer: UIView = .init()
     
     private let playButton: UIButton = {
         let button = UIButton(type: .system)
@@ -47,7 +46,7 @@ final class PlayerHelperView: UIView {
     }()
     
     private lazy var vStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [seekBar,hStackView,spacer,playButton])
+        let sv = UIStackView(arrangedSubviews: [seekBar,hStackView,playButton])
         sv.axis = .vertical
         sv.spacing = 8
         sv.alignment = .center
@@ -82,10 +81,6 @@ final class PlayerHelperView: UIView {
         
         hStackView.snp.makeConstraints { make in
             make.width.equalTo(vStackView.snp.width)
-        }
-        
-        spacer.snp.makeConstraints { make in
-            make.size.equalTo(20)
         }
         
         playButton.snp.makeConstraints { make in
